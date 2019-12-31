@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("nameValue", nameValue.getText().toString());
                 bundle.putString("ageValue", ageValue.getText().toString());
                 bundle.putString("hurtValue", hurtValue.getText().toString());
-                intent.putExtras(bundle)
+                intent.putExtras(bundle);
                 startActivity(intent);
 
             }
