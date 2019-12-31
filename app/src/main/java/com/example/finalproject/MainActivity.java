@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
             catch (Exception e)
             {
-                Toast.makeText(MainActivity.this, "please enter completly", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "please enter completly1", Toast.LENGTH_SHORT).show();
             }
         }
     };

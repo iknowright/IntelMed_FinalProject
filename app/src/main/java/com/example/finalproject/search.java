@@ -35,15 +35,10 @@ public class search extends AppCompatActivity {
     private void sendVar(){
         Bundle bundle = this.getIntent().getExtras();
 
-        age = Integer.parseInt(bundle.getString("ageValue"));
-        try
-        {
-            Toast.makeText(search.this, age, Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(search.this, "please enter completly", Toast.LENGTH_SHORT).show();
-        }
+        String name = bundle.getString("nameValue");
+        double age = bundle.getDouble("ageValue");
+        String hurt_his = bundle.getString("hurtValue");
+        Toast.makeText(search.this, name, Toast.LENGTH_SHORT).show();
 
 
 
