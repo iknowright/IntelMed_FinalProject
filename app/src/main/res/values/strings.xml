@@ -3,4 +3,7 @@
     <string name="btnSuggestSearch">運動影片建議</string>
     <string name="btnNormalSearch">搜尋</string>
     <string name="yoga">app_logo</string>
+    <string name="confirm">Confirm</string>
+    <string name="ageValue">年齡</string>
+    <string name="nameValue">姓名</string>
 </resources>
