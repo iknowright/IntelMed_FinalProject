@@ -17,6 +17,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Dialog_recording"></activity>
         <activity android:name=".youtube" />
+        <activity android:name=".result"></activity>
+        <activity android:name=".youtube" />
         <activity android:name=".search" />
         <activity android:name=".MainActivity">
             <intent-filter>
