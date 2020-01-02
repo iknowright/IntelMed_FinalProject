@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +49,21 @@ public class result extends AppCompatActivity {
                 videoEntry video = myVideoList.get(indexOfClickItem);
 
                 String videoId = video.GetVideoID();
+                Log.d("Response", videoId);
+
+                try
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(result.this, youtube.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("videoID", videoId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(result.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

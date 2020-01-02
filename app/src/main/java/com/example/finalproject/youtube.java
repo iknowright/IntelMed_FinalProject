@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -18,10 +19,11 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_youtube);
 
         Bundle bundle = this.getIntent().getExtras();
-        videoID = bundle.getString("video_id");
+        videoID = bundle.getString("videoID");
+        Log.d("Response", videoID);
 
         youTubeView = findViewById(R.id.youtube_view);
         youTubeView.initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
