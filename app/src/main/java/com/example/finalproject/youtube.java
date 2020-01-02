@@ -13,6 +13,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
 
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
+    private String videoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
         setContentView(R.layout.activity_main);
 
         Bundle bundle = this.getIntent().getExtras();
-        String videoID = bundle.getString("video_id");
+        videoID = bundle.getString("video_id");
 
         youTubeView = findViewById(R.id.youtube_view);
         youTubeView.initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
@@ -29,7 +30,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     @Override
     public void onInitializationSuccess(Provider provider, YouTubePlayer player, boolean wasRestored) {
         if (!wasRestored) {
-            player.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            player.cueVideo(videoID); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
         }
     }
 
