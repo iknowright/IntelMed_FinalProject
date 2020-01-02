@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -55,6 +56,7 @@ public class search extends AppCompatActivity {
         setInit();
         permissionCheck();
         textResult.setText("辨識結果");
+        setListener();
         btnAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view)
@@ -80,6 +82,26 @@ public class search extends AppCompatActivity {
         sendVar();
     }
 
+    private void setListener(){
+        btnSuggest.setOnClickListener(bEvent);
+    }
+
+    private View.OnClickListener bEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                Intent intent = new Intent();
+                intent.setClass(search.this, result.class);
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(search.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
 
     private void sendVar()
