@@ -115,7 +115,7 @@ public class result extends AppCompatActivity {
         ArrayList<videoEntry> totalResultInfo = new ArrayList<videoEntry>();
 
         //Some url endpoint that you may have
-        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key=AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw\n";
+        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key="+ getResources().getString(R.string.youtube_api) +"\n";
         //String to place our result in
         String result;
         //Instantiate new instance of our class
