@@ -26,7 +26,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
         Log.d("Response", videoID);
 
         youTubeView = findViewById(R.id.youtube_view);
-        youTubeView.initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
+        youTubeView.initialize(getResources().getString(R.string.youtube_api), this);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECOVERY_REQUEST) {
             // Retry initialization if user performed a recovery action
-            getYouTubePlayerProvider().initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
+            getYouTubePlayerProvider().initialize(getResources().getString(R.string.youtube_api), this);
         }
     }
 
