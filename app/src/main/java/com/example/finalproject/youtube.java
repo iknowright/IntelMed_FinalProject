@@ -29,7 +29,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
         Log.d("Response", videoID);
 
 
-        apiKey = BuildConfig.youtubeApiKey;
+        apiKey = getResources().getString(R.string.youtube_api);
         Log.d("Response", apiKey);
         youTubeView = findViewById(R.id.youtube_view);
         youTubeView.initialize(apiKey, this);
