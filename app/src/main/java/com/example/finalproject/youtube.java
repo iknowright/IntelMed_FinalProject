@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -15,6 +17,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
     private String videoID;
+    private String apiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +28,11 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
         videoID = bundle.getString("videoID");
         Log.d("Response", videoID);
 
+
+        apiKey = BuildConfig.youtubeApiKey;
+        Log.d("Response", apiKey);
         youTubeView = findViewById(R.id.youtube_view);
-        youTubeView.initialize(getResources().getString(R.string.youtube_api), this);
+        youTubeView.initialize(apiKey, this);
     }
 
     @Override
@@ -50,7 +56,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECOVERY_REQUEST) {
             // Retry initialization if user performed a recovery action
-            getYouTubePlayerProvider().initialize(getResources().getString(R.string.youtube_api), this);
+            getYouTubePlayerProvider().initialize(apiKey, this);
         }
     }
 
