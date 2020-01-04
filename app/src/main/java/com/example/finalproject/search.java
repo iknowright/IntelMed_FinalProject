@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +43,10 @@ public class search extends AppCompatActivity {
     private Button btnNormal;
     private Button btnAudio;
     private String name;
-    private int age;
+    private String age;
     private String injury_history;
+    private String which_btn;
+    private EditText search;
     TextView textResult;
     //ImageButton record;
     private boolean busy;
@@ -56,7 +59,9 @@ public class search extends AppCompatActivity {
         setInit();
         permissionCheck();
         textResult.setText("辨識結果");
-        setListener();
+        setListener1();
+        setListener2();
+        setListener3();
         btnAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view)
@@ -79,20 +84,88 @@ public class search extends AppCompatActivity {
         btnSuggest = findViewById(R.id.btnSuggestSearch);
         btnNormal = findViewById(R.id.btnNormalSearch);
         btnAudio = findViewById(R.id.btnAudioSearch);
-        sendVar();
+        search = findViewById(R.id.searchEditText);
+        getVar();
     }
 
-    private void setListener(){
-        btnSuggest.setOnClickListener(bEvent);
+    private void setListener1(){
+        btnSuggest.setOnClickListener(bEvent1);
     }
 
-    private View.OnClickListener bEvent = new View.OnClickListener() {
+    private View.OnClickListener bEvent1 = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             try
             {
+                which_btn = "1";
                 Intent intent = new Intent();
                 intent.setClass(search.this, result.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("age", age);
+                bundle.putString("injury_history", injury_history);
+                bundle.putString("which_btn", which_btn);
+                intent.putExtras(bundle);
+                Log.d("Response", bundle.toString());
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(search.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private void setListener2(){
+        btnNormal.setOnClickListener(bEvent2);
+    }
+
+    private View.OnClickListener bEvent2 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                which_btn = "2";
+                Intent intent = new Intent();
+                intent.setClass(search.this, result.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("age", age);
+                bundle.putString("injury_history", injury_history);
+                bundle.putString("which_btn", which_btn);
+                bundle.putString("text_search", search.getText().toString());
+                intent.putExtras(bundle);
+                Log.d("Response", bundle.toString());
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(search.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private void setListener3(){
+        btnAudio.setOnClickListener(bEvent3);
+    }
+
+    private View.OnClickListener bEvent3 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                which_btn = "3";
+                Intent intent = new Intent();
+                intent.setClass(search.this, result.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("age", age);
+                bundle.putString("injury_history", injury_history);
+                bundle.putString("which_btn", which_btn);
+                intent.putExtras(bundle);
+                Log.d("Response", bundle.toString());
                 startActivity(intent);
 
             }
@@ -104,14 +177,13 @@ public class search extends AppCompatActivity {
     };
 
 
-    private void sendVar()
+    private void getVar()
     {
         Bundle bundle = this.getIntent().getExtras();
-
-        String name = bundle.getString("nameValue");
-        double age = bundle.getDouble("ageValue");
-        String hurt_his = bundle.getString("hurtValue");
-        Toast.makeText(search.this, name, Toast.LENGTH_SHORT).show();
+        name = bundle.getString("nameValue");
+        age = bundle.getString("ageValue");
+        injury_history = bundle.getString("hurtValue");
+        Toast.makeText(search.this, injury_history, Toast.LENGTH_SHORT).show();
     }
 
     private void permissionCheck()

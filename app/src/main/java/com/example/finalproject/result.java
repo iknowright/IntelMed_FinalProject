@@ -28,13 +28,42 @@ public class result extends AppCompatActivity {
     private ArrayList<String> totalVideoTitles = new ArrayList<String>();
     private ArrayList<String> totalVideoIDs = new ArrayList<String>();
     private ArrayList<videoEntry> myVideoList = new ArrayList<videoEntry>();
+    private String age;
+    private String injury_his;
+    private String q_string;
+    private String which_btn;
+    private String text_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        getPara();
         SetInit();
+    }
+
+    private void getPara(){
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        age = bundle.getString("age");
+        injury_his = bundle.getString("injury_history");
+        which_btn = bundle.getString("which_btn");
+        Toast.makeText(result.this, which_btn, Toast.LENGTH_SHORT).show();
+        switch (which_btn)
+        {
+            case("1"):  //injury history
+                q_string = injury_his + "運動";
+                break;
+            case("2"):  //normal search
+                text_search = bundle.getString("text_search");
+                q_string = text_search;
+                break;
+            case("3"):  //speech recognition
+                q_string = injury_his;
+                break;
+        }
+
     }
 
     private void SetInit() {
@@ -115,7 +144,7 @@ public class result extends AppCompatActivity {
         ArrayList<videoEntry> totalResultInfo = new ArrayList<videoEntry>();
 
         //Some url endpoint that you may have
-        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key="+ getResources().getString(R.string.youtube_api) +"\n";
+        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=" + q_string + "&key=" + getResources().getString(R.string.youtube_api) +"\n";
         //String to place our result in
         String result;
         //Instantiate new instance of our class
