@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalProject</string>運動影片建議
+    <string name="app_name">FinalProject</string>
     <string name="btnSuggestSearch">運動影片建議</string>
     <string name="btnNormalSearch">搜尋</string>
     <string name="hurtValue">受傷史</string>

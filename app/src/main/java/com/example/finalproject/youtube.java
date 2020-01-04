@@ -1,7 +1,10 @@
 package com.example.finalproject;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -14,17 +17,22 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
     private String videoID;
+    private String apiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_youtube);
 
         Bundle bundle = this.getIntent().getExtras();
-        videoID = bundle.getString("video_id");
+        videoID = bundle.getString("videoID");
+        Log.d("Response", videoID);
 
+
+        apiKey = getResources().getString(R.string.youtube_api);
+        Log.d("Response", apiKey);
         youTubeView = findViewById(R.id.youtube_view);
-        youTubeView.initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
+        youTubeView.initialize(apiKey, this);
     }
 
     @Override
@@ -48,7 +56,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECOVERY_REQUEST) {
             // Retry initialization if user performed a recovery action
-            getYouTubePlayerProvider().initialize("AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw", this);
+            getYouTubePlayerProvider().initialize(apiKey, this);
         }
     }
 

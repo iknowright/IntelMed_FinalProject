@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,8 +23,10 @@ import java.util.ArrayList;
 
 public class result extends AppCompatActivity {
 
-    private ArrayAdapter listAdapter;
-    private ArrayList<String> totalListViewData = new ArrayList<String>();
+    private CustomListAdapter listAdapter;
+    private ArrayList<String> totalVideoImageLinks = new ArrayList<String>();
+    private ArrayList<String> totalVideoTitles = new ArrayList<String>();
+    private ArrayList<String> totalVideoIDs = new ArrayList<String>();
     private ArrayList<videoEntry> myVideoList = new ArrayList<videoEntry>();
 
     @Override
@@ -36,9 +40,11 @@ public class result extends AppCompatActivity {
     private void SetInit() {
 
         this.myVideoList.addAll(GetTotalResultInfo());
-        this.totalListViewData = this.GetTotalDataSource();
+        this.totalVideoImageLinks = this.GetVideoImageLinks();
+        this.totalVideoTitles = this.GetVideoTitles();
+        this.totalVideoIDs = this.GetVideoIDs();
 
-        ListView videoList = (ListView) findViewById(R.id.result_sheet_list_view);
+        ListView videoList = findViewById(R.id.result_sheet_list_view);
         videoList.setOnItemClickListener(new ListView.OnItemClickListener(){
 
             @Override
@@ -47,19 +53,58 @@ public class result extends AppCompatActivity {
                 videoEntry video = myVideoList.get(indexOfClickItem);
 
                 String videoId = video.GetVideoID();
+                Log.d("Response", videoId);
+
+                try
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(result.this, youtube.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("videoID", videoId);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(result.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        this.listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, this.totalListViewData);
+        this.listAdapter = new CustomListAdapter(this, this.totalVideoTitles, this.totalVideoImageLinks, this.totalVideoIDs);
         videoList.setAdapter(this.listAdapter);
     }
 
-    private  ArrayList<String> GetTotalDataSource() {
+    private  ArrayList<String> GetVideoImageLinks() {
         ArrayList<String> totalListViewData = new ArrayList<String>();
 
         for (int index = 0; index < this.myVideoList.size(); index++) {
             videoEntry video = this.myVideoList.get(index);
-            String perListViewData = "[" + video.GetVideoID() + "] " + video.GetVideoTitle();
+            String perListViewData = video.GetImageUrl();
+
+            totalListViewData.add(perListViewData);
+        }
+        return totalListViewData;
+    }
+
+    private  ArrayList<String> GetVideoTitles() {
+        ArrayList<String> totalListViewData = new ArrayList<String>();
+
+        for (int index = 0; index < this.myVideoList.size(); index++) {
+            videoEntry video = this.myVideoList.get(index);
+            String perListViewData = video.GetVideoTitle();
+
+            totalListViewData.add(perListViewData);
+        }
+        return totalListViewData;
+    }
+
+    private  ArrayList<String> GetVideoIDs() {
+        ArrayList<String> totalListViewData = new ArrayList<String>();
+
+        for (int index = 0; index < this.myVideoList.size(); index++) {
+            videoEntry video = this.myVideoList.get(index);
+            String perListViewData = video.GetVideoID();
 
             totalListViewData.add(perListViewData);
         }
@@ -70,7 +115,7 @@ public class result extends AppCompatActivity {
         ArrayList<videoEntry> totalResultInfo = new ArrayList<videoEntry>();
 
         //Some url endpoint that you may have
-        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key=AIzaSyBb_QZULAFWE8scL9MDMmhjArUez4uTfuw\n";
+        String myUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key="+ getResources().getString(R.string.youtube_api) +"\n";
         //String to place our result in
         String result;
         //Instantiate new instance of our class
@@ -88,12 +133,15 @@ public class result extends AppCompatActivity {
                 try {
                     String video_title = row.getJSONObject("snippet").getString("title");
                     String video_id = row.getJSONObject("id").getString("videoId");
+                    JSONObject snippet = row.getJSONObject("snippet");
+                    String image_url = snippet.getJSONObject("thumbnails").getJSONObject("default").getString("url");
                     Log.d("Response", "index = " + i);
                     Log.d("Response", video_id);
                     Log.d("Response", video_title);
+                    Log.d("Response", image_url);
 
                     videoEntry perVideoEntry = new videoEntry();
-                    perVideoEntry.init(video_id, video_title);
+                    perVideoEntry.init(video_id, video_title, image_url);
                     totalResultInfo.add(perVideoEntry);
                 } catch (Exception e) {
                     continue;
