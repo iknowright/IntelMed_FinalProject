@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/p1_bg"
     tools:context=".MainActivity">
 
 
@@ -64,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="69dp"
         android:layout_marginBottom="75dp"
+        android:background="@color/colorPrimary"
         android:text="confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
