@@ -42,6 +42,7 @@ public class search extends AppCompatActivity {
     private Button btnSuggest;
     private Button btnNormal;
     private Button btnAudio;
+    private Button btnReturn;
     private String name;
     private String age;
     private String injury_history;
@@ -62,6 +63,7 @@ public class search extends AppCompatActivity {
         setListener1();
         setListener2();
         setListener3();
+        setListener4();
         btnAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view)
@@ -84,6 +86,7 @@ public class search extends AppCompatActivity {
         btnSuggest = findViewById(R.id.btnSuggestSearch);
         btnNormal = findViewById(R.id.btnNormalSearch);
         btnAudio = findViewById(R.id.btnAudioSearch);
+        btnReturn = findViewById(R.id.btn_return);
         search = findViewById(R.id.searchEditText);
         getVar();
     }
@@ -176,6 +179,26 @@ public class search extends AppCompatActivity {
         }
     };
 
+    private void setListener4(){
+        btnReturn.setOnClickListener(bEvent4);
+    }
+
+    private View.OnClickListener bEvent4 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                Intent intent = new Intent();
+                intent.setClass(search.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(search.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private void getVar()
     {
@@ -278,6 +301,18 @@ public class search extends AppCompatActivity {
     private void pushResult(String msg, boolean success)
     {
         if(success) {
+            boolean found=false;
+            Pattern pattern = Pattern.compile("1.*2");
+            Matcher matcher = pattern.matcher(msg);
+            while (matcher.find()) {
+                Log.d("Response", "I found the text "+matcher.group()+" starting at index "+
+                        matcher.start()+" and ending at index "+matcher.end());
+                found = true;
+            }
+            if(!found) {
+                Log.d("Response", "not found");
+            }
+
             textResult.setText(msg);
             new Tai2Chi().execute(msg);
         }

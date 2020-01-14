@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class result extends AppCompatActivity {
+
+    private Button btnReturn;
 
     private CustomListAdapter listAdapter;
     private ArrayList<String> totalVideoImageLinks = new ArrayList<String>();
@@ -41,6 +44,7 @@ public class result extends AppCompatActivity {
 
         getPara();
         SetInit();
+        setListener1();
     }
 
     private void getPara(){
@@ -73,6 +77,8 @@ public class result extends AppCompatActivity {
         this.totalVideoTitles = this.GetVideoTitles();
         this.totalVideoIDs = this.GetVideoIDs();
 
+        btnReturn = findViewById(R.id.btn_return_result);
+
         ListView videoList = findViewById(R.id.result_sheet_list_view);
         videoList.setOnItemClickListener(new ListView.OnItemClickListener(){
 
@@ -103,6 +109,29 @@ public class result extends AppCompatActivity {
         this.listAdapter = new CustomListAdapter(this, this.totalVideoTitles, this.totalVideoImageLinks, this.totalVideoIDs);
         videoList.setAdapter(this.listAdapter);
     }
+
+    private void setListener1(){
+        btnReturn.setOnClickListener(bEvent1);
+    }
+
+    private View.OnClickListener bEvent1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                Intent intent = new Intent();
+                intent.setClass(result.this, search.class);
+                Bundle bundle = new Bundle();
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(result.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private  ArrayList<String> GetVideoImageLinks() {
         ArrayList<String> totalListViewData = new ArrayList<String>();

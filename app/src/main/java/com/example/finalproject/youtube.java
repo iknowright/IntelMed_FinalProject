@@ -1,10 +1,10 @@
 package com.example.finalproject;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -18,6 +18,7 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
     private YouTubePlayerView youTubeView;
     private String videoID;
     private String apiKey;
+    private Button btnReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +29,38 @@ public class youtube extends YouTubeBaseActivity implements YouTubePlayer.OnInit
         videoID = bundle.getString("videoID");
         Log.d("Response", videoID);
 
+        btnReturn = findViewById(R.id.btn_return_youtube);
+        setListener1();
+
 
         apiKey = getResources().getString(R.string.youtube_api);
         Log.d("Response", apiKey);
         youTubeView = findViewById(R.id.youtube_view);
         youTubeView.initialize(apiKey, this);
     }
+
+    private void setListener1(){
+        btnReturn.setOnClickListener(bEvent1);
+    }
+
+    private View.OnClickListener bEvent1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try
+            {
+                Intent intent = new Intent();
+                intent.setClass(youtube.this, search.class);
+                Bundle bundle = new Bundle();
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(youtube.this, "please enter completly1", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onInitializationSuccess(Provider provider, YouTubePlayer player, boolean wasRestored) {
