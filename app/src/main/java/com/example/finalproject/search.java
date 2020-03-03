@@ -317,6 +317,7 @@ public class search extends AppCompatActivity {
             new Tai2Chi().execute(msg);
         }
         textResult.setText(msg);
+        search.setText(msg);
         busy = false;
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/p1_bg"
+    android:background="@drawable/biaohan"
     tools:context=".MainActivity">
 
 
@@ -79,9 +79,9 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="69dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="4dp"
         android:background="#B3FFFFFF"
-        android:text="卻認"
+        android:text="確認"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
